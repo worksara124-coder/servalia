@@ -46,8 +46,9 @@ p{margin:0}
 .nav .short{display:none}
 @media(max-width:560px){.nav .long{display:none}.nav .short{display:inline}.nav .sp .btn{min-height:40px;padding:0 14px}.menu-btn{min-height:40px}.nav{padding:10px 12px}.nav .sp{gap:8px}}
 .mobile a.m-quote{display:flex;padding:0;margin-top:auto;justify-content:center;font-size:17px;min-height:54px;border-bottom:0;letter-spacing:0;color:var(--on)}
-.mobile{position:fixed;inset:0;z-index:40;background:var(--bg);padding:90px var(--gut) 30px;display:flex;flex-direction:column;gap:6px;transform:translateY(-100%);transition:transform .6s var(--ease-panel)}
-.mobile.open{transform:none}.mobile a{font-size:34px;letter-spacing:-.035em;text-decoration:none;padding:6px 0;border-bottom:1px solid var(--line)}
+.mobile{position:fixed;inset:0;z-index:40;background:var(--bg);padding:90px var(--gut) 30px;display:flex;flex-direction:column;gap:6px;transform:translateY(-100%);transition:transform .6s var(--ease-panel),visibility 0s .6s}
+.mobile{visibility:hidden}.mobile.open{transform:none;visibility:visible;transition:transform .6s var(--ease-panel),visibility 0s}
+@media(min-width:1021px){.mobile{display:none}}.mobile a{font-size:34px;letter-spacing:-.035em;text-decoration:none;padding:6px 0;border-bottom:1px solid var(--line)}
 .mobile a.m-brand{position:absolute;top:18px;left:var(--gut);font-size:20px;border:0;padding:0}
 .mobile .m-close{position:absolute;top:14px;right:var(--gut)}
 
