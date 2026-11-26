@@ -14,6 +14,7 @@ import { journee } from '../data/ateliers';
     <div class="moments">
       {journee.map((j, i) => (
         <article class="mo rv" data-i={i} data-h={j.heure}>
+          <span class="hr">{j.heure}</span>
           <img src={j.image} style={`object-position:${j.position}`} alt="" loading="lazy" />
           <div><h3>{j.titre}</h3><p>{j.texte}</p></div>
         </article>

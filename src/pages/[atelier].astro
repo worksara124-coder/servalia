@@ -10,6 +10,7 @@ import Faq from '../components/Faq.astro';
 import Close from '../components/Close.astro';
 import Footer from '../components/Footer.astro';
 import QuoteModal from '../components/QuoteModal.astro';
+import MobileCta from '../components/MobileCta.astro';
 import { ateliers, type AtelierId } from '../data/ateliers';
 
 export function getStaticPaths() {
@@ -29,5 +30,6 @@ const a = ateliers[Astro.params.atelier as AtelierId];
     <Close atelier={a} />
   </main>
   <Footer />
+  <MobileCta atelier={a} />
   <QuoteModal atelier={a} />
 </Base>

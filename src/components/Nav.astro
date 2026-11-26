@@ -15,14 +15,16 @@ const liens = a
     <ul>{liens.map(([t, h]) => <li><a href={h}>{t}</a></li>)}</ul>
     <div class="sp">
       {autre && <a class="sw" href={`/${autre.id}`}>Voir l'{autre.nom.replace('Atelier', 'atelier')}</a>}
-      <a class="btn dk" href={a ? '#contact' : '/mecanique#contact'} data-quote>Demander un devis</a>
+      <a class="btn dk" href={a ? '#contact' : '/mecanique#contact'} data-quote><span class="long">Demander un devis</span><span class="short">Devis</span></a>
       <button class="menu-btn" id="menu-open" type="button" aria-expanded="false" aria-controls="mobile">Menu</button>
     </div>
   </div>
 </header>
 <nav class="mobile" id="mobile" aria-label="Menu mobile">
-  <button class="menu-btn close" id="menu-close" type="button">Fermer</button>
+  <a class="brand m-brand" href="/?choix"><img src="/img/mark.png" alt="" width="34" height="34" />SERVALIA</a>
+  <button class="menu-btn m-close" id="menu-close" type="button">Fermer</button>
   {liens.map(([t, h]) => <a href={h}>{t}</a>)}
   {autre && <a href={`/${autre.id}`}>{autre.nom}</a>}
   <a href="/?choix">Choisir un atelier</a>
+  {a && <a class="btn m-quote" href="#contact" data-quote>Demander un devis</a>}
 </nav>

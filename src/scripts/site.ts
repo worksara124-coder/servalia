@@ -269,8 +269,25 @@ async function sendQuote(data: Record<string, unknown>) {
   console.info('Demande de devis SERVALIA', data);
 }
 
+function initMobileCta() {
+  const bar = $('mcta');
+  if (!bar) return;
+  const contact = $('contact');
+  let contactVisible = false;
+  if (contact) new IntersectionObserver((es) => { contactVisible = es[0].isIntersecting; upd(); }).observe(contact);
+  const upd = () => {
+    const show = scrollY > innerHeight * 0.7 && !contactVisible;
+    bar.classList.toggle('show', show);
+    bar.setAttribute('aria-hidden', String(!show));
+    bar.querySelectorAll<HTMLElement>('a,button').forEach((el) => (el.tabIndex = show ? 0 : -1));
+  };
+  addEventListener('scroll', upd, { passive: true });
+  upd();
+}
+
 document.addEventListener('astro:page-load', () => {
   initNav();
+  initMobileCta();
   initReveal();
   initPanels();
   initJournee();

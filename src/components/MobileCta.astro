@@ -1,0 +1,13 @@
+---
+import Icon from './Icon.astro';
+import { ateliers, entreprise as e, type Atelier } from '../data/ateliers';
+interface Props { atelier: Atelier }
+const { atelier: a } = Astro.props;
+const autre = Object.values(ateliers).find((x) => x.id !== a.id)!;
+---
+<div class="mcta" id="mcta" aria-hidden="true">
+  {e.telephone
+    ? <a class="mcta-2" href={`tel:${e.telephone.replace(/\s/g, '')}`} aria-label={`Appeler ${e.telephone}`}><Icon name="phone" /></a>
+    : <a class="mcta-2" href={`/${autre.id}`} aria-label={`Voir l'${autre.nom.replace('Atelier', 'atelier')}`}><Icon name="swap" /><span>{autre.court}</span></a>}
+  <button class="btn" type="button" data-quote tabindex="-1">Demander un devis <Icon name="arrow" /></button>
+</div>
