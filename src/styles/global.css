@@ -213,8 +213,8 @@ footer{padding:clamp(60px,7vw,100px) var(--gut) 26px}
 #intro.out{opacity:0;visibility:hidden}
 .ilogo{position:relative;z-index:2;display:grid;justify-items:center;gap:26px;width:min(64vw,380px)}
 .parts{position:absolute;inset:0;pointer-events:none}
-.part{position:absolute;top:0;left:var(--x);width:calc(var(--w) * 1vw);min-width:calc(var(--w) * 3.2px);transform:translate3d(0,-60vh,0);animation:fall var(--t) var(--d) cubic-bezier(.5,.05,.85,.55) both;will-change:transform}
-.part img{position:relative;width:100%;filter:blur(var(--b)) drop-shadow(0 24px 22px #0000002e);animation:spinp var(--t) var(--d) linear both}
+.part{position:absolute;top:0;left:var(--x);width:calc(var(--w) * .5vw);min-width:calc(var(--w) * 2px);transform:translate3d(0,-60vh,0);animation:fall var(--t) var(--d) cubic-bezier(.5,.05,.85,.55) both;will-change:transform}
+.part img{position:relative;width:100%;filter:blur(calc(var(--b) * .6)) drop-shadow(0 14px 14px #00000029);animation:spinp var(--t) var(--d) linear both}
 .part::before{content:"";position:absolute;left:22%;right:22%;bottom:45%;height:160%;border-radius:50%;background:linear-gradient(to top,#9aa0a64d,#9aa0a600 85%);filter:blur(12px);animation:trail var(--t) var(--d) linear both}
 @keyframes fall{from{transform:translate3d(0,-60vh,0)}to{transform:translate3d(var(--dx),125vh,0)}}
 @keyframes spinp{from{transform:rotate(var(--r0))}to{transform:rotate(var(--r1))}}
@@ -429,5 +429,5 @@ body.lock{overflow:hidden}
   .door .btn{min-height:46px}
 }
 @media(max-width:380px){.quick{grid-template-columns:1fr}}
-@media(max-width:760px){.part{width:calc(var(--w) * 2.2vw)}}
+@media(max-width:760px){.part{width:calc(var(--w) * 1.15vw)}}
 @media(prefers-reduced-motion:reduce){.parts{display:none}}
