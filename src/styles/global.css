@@ -209,9 +209,17 @@ footer{padding:clamp(60px,7vw,100px) var(--gut) 26px}
 .rv{opacity:0;transform:translateY(30px);transition:opacity .9s var(--ease),transform .9s var(--ease)}.rv.in{opacity:1;transform:none}
 
 /* ---------- Intro + choix d'atelier (page d'accueil) ---------- */
-#intro{position:fixed;inset:0;z-index:60;background:var(--bg);display:grid;place-items:center;transition:opacity .8s var(--ease),visibility .8s}
+#intro{position:fixed;inset:0;z-index:60;background:radial-gradient(ellipse at 50% 45%,#ffffff 0,#f1f2f2 45%,#dfe1e2 100%);display:grid;place-items:center;overflow:hidden;transition:opacity .8s var(--ease),visibility .8s}
 #intro.out{opacity:0;visibility:hidden}
-.ilogo{display:grid;justify-items:center;gap:26px;width:min(64vw,380px)}
+.ilogo{position:relative;z-index:2;display:grid;justify-items:center;gap:26px;width:min(64vw,380px)}
+.parts{position:absolute;inset:0;pointer-events:none}
+.part{position:absolute;top:0;left:var(--x);width:calc(var(--w) * 1vw);min-width:calc(var(--w) * 3.2px);transform:translate3d(0,-60vh,0);animation:fall var(--t) var(--d) cubic-bezier(.5,.05,.85,.55) both;will-change:transform}
+.part img{position:relative;width:100%;filter:blur(var(--b)) drop-shadow(0 24px 22px #0000002e);animation:spinp var(--t) var(--d) linear both}
+.part::before{content:"";position:absolute;left:22%;right:22%;bottom:45%;height:160%;border-radius:50%;background:linear-gradient(to top,#9aa0a64d,#9aa0a600 85%);filter:blur(12px);animation:trail var(--t) var(--d) linear both}
+@keyframes fall{from{transform:translate3d(0,-60vh,0)}to{transform:translate3d(var(--dx),125vh,0)}}
+@keyframes spinp{from{transform:rotate(var(--r0))}to{transform:rotate(var(--r1))}}
+@keyframes trail{0%{opacity:0}25%{opacity:1}100%{opacity:.8}}
+#intro.out .part{animation-play-state:paused}
 .ilogo .mark{width:62%;animation:spinIn 1.9s cubic-bezier(.2,.8,.2,1) both}
 .ilogo .word{width:100%;clip-path:inset(0 100% 0 0);animation:wipe .9s 1.3s cubic-bezier(.7,0,.2,1) forwards}
 .ilogo .bar{width:100%;height:2px;background:var(--line);overflow:hidden}.ilogo .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#d7261e,#e8930c);animation:load 3s .2s ease-in-out forwards}
@@ -421,3 +429,5 @@ body.lock{overflow:hidden}
   .door .btn{min-height:46px}
 }
 @media(max-width:380px){.quick{grid-template-columns:1fr}}
+@media(max-width:760px){.part{width:calc(var(--w) * 2.2vw)}}
+@media(prefers-reduced-motion:reduce){.parts{display:none}}

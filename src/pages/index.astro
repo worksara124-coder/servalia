@@ -3,12 +3,32 @@ import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
 import { ateliers } from '../data/ateliers';
 const list = [ateliers.mecanique, ateliers.metallique];
+// Pièces qui tombent pendant l'intro : image, position (x en %), largeur, départ, durée, rotation, flou (profondeur)
+const pieces = [
+  { img: 'p0', x: 4,  w: 22, d: 0.25, t: 2.3, r0: -20, r1: 160,  dx: 4,  b: 0,   z: 2 },
+  { img: 'p3', x: 70, w: 26, d: 0.45, t: 2.6, r0: 40,  r1: -30,  dx: -6, b: 0,   z: 2 },
+  { img: 'p1', x: 76, w: 11, d: 0.1,  t: 2.0, r0: 10,  r1: 220,  dx: 2,  b: 0,   z: 1 },
+  { img: 'p2', x: 80, w: 15, d: 1.05, t: 2.4, r0: -8,  r1: 60,   dx: -3, b: 0,   z: 2 },
+  { img: 'p1', x: 12, w: 13, d: 0.9,  t: 2.2, r0: 0,   r1: -180, dx: 3,  b: 0,   z: 1 },
+  { img: 'p4', x: 33, w: 6,  d: 0.6,  t: 2.0, r0: 70,  r1: 250,  dx: 2,  b: 1.2, z: 0 },
+  { img: 'p0', x: 58, w: 9,  d: 1.35, t: 2.0, r0: 0,   r1: 200,  dx: -2, b: 1.5, z: 0 },
+  { img: 'p3', x: -6, w: 34, d: 1.7,  t: 2.1, r0: -50, r1: 10,   dx: 6,  b: 3,   z: 3 },
+  { img: 'p2', x: 88, w: 20, d: 1.9,  t: 2.0, r0: 15,  r1: -70,  dx: -4, b: 2.5, z: 3 },
+  { img: 'p4', x: 18, w: 7,  d: 2.15, t: 1.9, r0: -30, r1: 140,  dx: 2,  b: 0,   z: 1 },
+];
 ---
 <Base
   title="SERVALIA — Maintenance industrielle et construction métallique à Casablanca"
   description="SERVALIA, Casablanca : maintenance industrielle, électromécanique, automatismes, usinage de précision et construction métallique. Choisissez votre atelier."
 >
   <div id="intro" aria-label="Introduction SERVALIA">
+    <div class="parts" aria-hidden="true">
+      {pieces.map((p) => (
+        <span class="part" style={`--x:${p.x}%;--w:${p.w};--d:${p.d}s;--t:${p.t}s;--r0:${p.r0}deg;--r1:${p.r1}deg;--dx:${p.dx}vw;--b:${p.b}px;z-index:${p.z}`}>
+          <img src={`/img/parts/${p.img}.webp`} alt="" />
+        </span>
+      ))}
+    </div>
     <div class="ilogo">
       <img class="mark" src="/img/mark-dark.png" alt="" />
       <img class="word" src="/img/word.png" alt="SERVALIA" />
@@ -51,7 +71,7 @@ const list = [ateliers.mecanique, ateliers.metallique];
     if (skipNow) { intro.classList.add('out'); return; }
     document.body.classList.add('lock');
     document.getElementById('skip')?.addEventListener('click', end);
-    setTimeout(end, matchMedia('(prefers-reduced-motion: reduce)').matches ? 600 : 3500);
+    setTimeout(end, matchMedia('(prefers-reduced-motion: reduce)').matches ? 600 : 4300);
   }
   document.addEventListener('astro:page-load', initIntro);
 </script>
