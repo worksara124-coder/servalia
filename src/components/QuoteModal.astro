@@ -1,0 +1,131 @@
+---
+import Icon from './Icon.astro';
+import { ateliers, secteurs, type Atelier } from '../data/ateliers';
+interface Props { atelier: Atelier }
+const { atelier: a } = Astro.props;
+const data = {
+  current: a.id,
+  ateliers: Object.values(ateliers).map((t) => ({ id: t.id, nom: t.nom, court: t.court, couleur: t.couleur, on: t.surCouleur, prestations: t.prestations.map((p) => p.titre) })),
+};
+const etapes = ['Atelier', 'Besoin', 'Site', 'Coordonnées', 'Récapitulatif'];
+---
+<div class="qm" id="qm" hidden>
+  <div class="qm-back" data-qclose></div>
+  <div class="qm-box" role="dialog" aria-modal="true" aria-labelledby="qm-title">
+    <aside class="qm-side">
+      <div class="qm-brand"><img src="/img/mark.png" alt="" width="28" height="28" /> SERVALIA</div>
+      <p class="qm-kicker">Demande de devis</p>
+      <ol class="qm-steps" id="qm-steps">
+        {etapes.map((e, i) => <li data-s={i}><span>{i + 1}</span>{e}</li>)}
+      </ol>
+      <p class="qm-note">Environ 2 minutes. Un technicien vous recontacte avec une première estimation.</p>
+    </aside>
+
+    <form class="qm-main" id="qm-form" novalidate>
+      <header class="qm-top">
+        <div class="qm-bar"><i id="qm-bar"></i></div>
+        <span class="qm-count" id="qm-count">Étape 1 sur 5</span>
+        <button type="button" class="qm-x" data-qclose aria-label="Fermer">×</button>
+      </header>
+
+      <!-- Étape 1 -->
+      <section class="qs" data-step="0">
+        <h2 id="qm-title">Quel atelier pour votre demande ?</h2>
+        <p class="qs-sub">Choisissez l'atelier, puis une ou plusieurs prestations.</p>
+        <div class="q-cards" id="q-ateliers" role="radiogroup" aria-label="Atelier"></div>
+        <p class="q-label">Prestations concernées</p>
+        <div class="q-chips" id="q-prestas"></div>
+        <p class="q-err" data-err="0"></p>
+      </section>
+
+      <!-- Étape 2 -->
+      <section class="qs" data-step="1" hidden>
+        <h2>Parlez-nous de votre besoin.</h2>
+        <p class="qs-sub">Plus vous êtes précis, plus le devis sera juste.</p>
+        <p class="q-label">Type de demande</p>
+        <div class="q-opts" data-name="type" data-single>
+          <button type="button" data-v="Panne / dépannage"><Icon name="tool" /><b>Panne</b><small>Un équipement est arrêté</small></button>
+          <button type="button" data-v="Maintenance planifiée"><Icon name="cal" /><b>Maintenance</b><small>Préventif ou contrat</small></button>
+          <button type="button" data-v="Fabrication / projet neuf"><Icon name="build" /><b>Projet neuf</b><small>Fabrication, installation</small></button>
+        </div>
+        <label class="q-field">Description
+          <textarea id="q-desc" placeholder="Équipement, symptômes, dimensions, matière, quantité…"></textarea>
+        </label>
+        <p class="q-label">Délai souhaité</p>
+        <div class="q-seg" data-name="delai" data-single>
+          <button type="button" data-v="Urgent">Urgent</button>
+          <button type="button" data-v="Sous 1 semaine">Sous 1 semaine</button>
+          <button type="button" data-v="Sous 1 mois">Sous 1 mois</button>
+          <button type="button" data-v="Flexible">Flexible</button>
+        </div>
+        <label class="q-file">
+          <input type="file" id="q-files" multiple accept="image/*,.pdf,.dwg,.dxf" />
+          <Icon name="doc" /><span id="q-files-txt">Ajouter des photos ou des plans (facultatif)</span>
+        </label>
+        <p class="q-err" data-err="1"></p>
+      </section>
+
+      <!-- Étape 3 -->
+      <section class="qs" data-step="2" hidden>
+        <h2>Où se trouve le site ?</h2>
+        <p class="qs-sub">Pour préparer le déplacement ou la prise en charge en atelier.</p>
+        <p class="q-label">Lieu de l'intervention</p>
+        <div class="q-opts two" data-name="lieu" data-single>
+          <button type="button" data-v="Sur site"><Icon name="pin" /><b>Sur votre site</b><small>Nos techniciens se déplacent</small></button>
+          <button type="button" data-v="En atelier"><Icon name="site" /><b>Dans notre atelier</b><small>Vous apportez la pièce</small></button>
+        </div>
+        <div class="q-grid">
+          <label class="q-field">Ville<input id="q-ville" autocomplete="address-level2" value="Casablanca" /></label>
+          <label class="q-field">Secteur d'activité
+            <select id="q-secteur"><option value="">Choisir…</option>{secteurs.map((s) => <option>{s}</option>)}<option>Autre</option></select>
+          </label>
+          <label class="q-field full">Adresse ou zone (facultatif)<input id="q-adresse" autocomplete="street-address" placeholder="Zone industrielle, quartier…" /></label>
+        </div>
+        <p class="q-err" data-err="2"></p>
+      </section>
+
+      <!-- Étape 4 -->
+      <section class="qs" data-step="3" hidden>
+        <h2>Comment vous joindre ?</h2>
+        <p class="qs-sub">Vos coordonnées servent uniquement à répondre à cette demande.</p>
+        <div class="q-grid">
+          <label class="q-field">Nom et prénom *<input id="q-nom" autocomplete="name" /></label>
+          <label class="q-field">Société<input id="q-societe" autocomplete="organization" /></label>
+          <label class="q-field">Téléphone *<input id="q-tel" type="tel" autocomplete="tel" placeholder="06 00 00 00 00" /></label>
+          <label class="q-field">E-mail<input id="q-email" type="email" autocomplete="email" /></label>
+        </div>
+        <p class="q-label">Vous préférez être contacté par</p>
+        <div class="q-seg" data-name="contact" data-single>
+          <button type="button" data-v="Téléphone">Téléphone</button>
+          <button type="button" data-v="WhatsApp">WhatsApp</button>
+          <button type="button" data-v="E-mail">E-mail</button>
+        </div>
+        <p class="q-err" data-err="3"></p>
+      </section>
+
+      <!-- Étape 5 -->
+      <section class="qs" data-step="4" hidden>
+        <h2>Vérifiez votre demande.</h2>
+        <p class="qs-sub">Cliquez sur une rubrique pour la modifier.</p>
+        <dl class="q-recap" id="q-recap"></dl>
+        <label class="q-check"><input type="checkbox" id="q-ok" /> J'accepte que SERVALIA me recontacte au sujet de cette demande.</label>
+        <p class="q-err" data-err="4"></p>
+      </section>
+
+      <!-- Confirmation -->
+      <section class="qs qs-done" data-step="5" hidden>
+        <div class="q-tick"><Icon name="check" /></div>
+        <h2>Merci, votre demande est prête.</h2>
+        <p class="qs-sub" id="q-done-txt"></p>
+        <p class="q-demo">Démo : l'envoi sera branché sur la messagerie de SERVALIA à la mise en ligne.</p>
+        <button type="button" class="btn dk" data-qclose>Revenir au site</button>
+      </section>
+
+      <footer class="qm-foot" id="qm-foot">
+        <button type="button" class="q-back" id="q-prev">Retour</button>
+        <button type="submit" class="btn" id="q-next">Continuer <Icon name="arrow" /></button>
+      </footer>
+    </form>
+  </div>
+  <script type="application/json" id="quote-data" set:html={JSON.stringify(data)} />
+</div>

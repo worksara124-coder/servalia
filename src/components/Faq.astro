@@ -1,0 +1,17 @@
+---
+import Icon from './Icon.astro';
+import { faq } from '../data/ateliers';
+---
+<section class="section" id="questions">
+  <div class="faq">
+    <div class="head rv"><h2>Cinq questions qu'on nous pose avant chaque devis.</h2></div>
+    <div class="rv">
+      {faq.map((f, i) => (
+        <details open={i === 0}>
+          <summary>{f.q}<Icon name="plus" /></summary>
+          <p>{f.r}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

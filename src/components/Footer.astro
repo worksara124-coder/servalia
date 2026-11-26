@@ -1,0 +1,32 @@
+---
+import { ateliers, entreprise as e } from '../data/ateliers';
+const year = new Date().getFullYear();
+---
+<footer>
+  <div class="fgrid">
+    <div>
+      <a class="brand" href="/?choix"><img src="/img/mark.png" alt="" width="34" height="34" />SERVALIA</a>
+      <p>Maintenance industrielle, usinage de précision et construction métallique. {e.forme} créée en {e.creation} à Casablanca.</p>
+    </div>
+    {Object.values(ateliers).map((t) => (
+      <div>
+        <h4>{t.nom}</h4>
+        <ul>{t.prestations.slice(0, 5).map((p) => <li><a href={`/${t.id}#prestations`}>{p.titre}</a></li>)}</ul>
+      </div>
+    ))}
+    <div>
+      <h4>Nous écrire</h4>
+      <ul>
+        <li>{e.adresse}</li>
+        {e.telephone && <li><a href={`tel:${e.telephone.replace(/\s/g, '')}`}>{e.telephone}</a></li>}
+        {e.email && <li><a href={`mailto:${e.email}`}>{e.email}</a></li>}
+        <li><a href="#contact" data-quote>Demander un devis</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="fbot">
+    <span>© {year} SERVALIA · {e.forme}</span>
+    <span>Capital {e.capital}</span>
+    <span>Casablanca, Maroc</span>
+  </div>
+</footer>

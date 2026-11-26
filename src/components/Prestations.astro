@@ -1,0 +1,39 @@
+---
+import Icon from './Icon.astro';
+import type { Atelier } from '../data/ateliers';
+interface Props { atelier: Atelier }
+const { atelier: a } = Astro.props;
+const first = 0;
+---
+<section class="section" id="prestations">
+  <div class="head rv">
+    <h2>{a.prestationsTitre}</h2>
+    <p>{a.prestationsIntro}</p>
+  </div>
+  <div class="panels rv" role="tablist" aria-label="Prestations">
+    {a.prestations.map((p, i) => (
+      <button class="pn" type="button" role="tab" id={`pn-${i}`} aria-controls={`dt-${i}`}
+        aria-expanded={i === first ? 'true' : 'false'} aria-selected={i === first ? 'true' : 'false'} data-i={i}>
+        <img src={p.image} style={`object-position:${p.position}`} alt="" loading={i === first ? 'eager' : 'lazy'} />
+        <span class="no">{String(i + 1).padStart(2, '0')}</span>
+        <span class="vt">{p.court}</span>
+        <span class="open">
+          <span><h3>{p.titre}</h3><small>{p.resume}</small></span>
+        </span>
+      </button>
+    ))}
+  </div>
+  {a.prestations.map((p, i) => (
+    <div class={`detail${i === first ? ' on' : ''}`} id={`dt-${i}`} role="tabpanel" aria-labelledby={`pn-${i}`}>
+      <div>
+        <h3>{p.phrase}</h3>
+        <p class="txt">{p.texte}</p>
+        <div class="acts">
+          <a class="btn" href="#contact" data-quote data-presta={p.titre}>Demander un devis <Icon name="arrow" /></a>
+        </div>
+      </div>
+      <ul class="feat">{p.points.map((pt) => <li><Icon name={pt.icon} />{pt.label}</li>)}</ul>
+      <ul class="rep">{p.reperes.map((r) => <li><small>{r.label}</small><b>{r.valeur}</b></li>)}</ul>
+    </div>
+  ))}
+</section>

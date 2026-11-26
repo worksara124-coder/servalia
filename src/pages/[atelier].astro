@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import Prestations from '../components/Prestations.astro';
+import Methode from '../components/Methode.astro';
+import Journee from '../components/Journee.astro';
+import Reperes from '../components/Reperes.astro';
+import Faq from '../components/Faq.astro';
+import Close from '../components/Close.astro';
+import Footer from '../components/Footer.astro';
+import QuoteModal from '../components/QuoteModal.astro';
+import { ateliers, type AtelierId } from '../data/ateliers';
+
+export function getStaticPaths() {
+  return (Object.keys(ateliers) as AtelierId[]).map((atelier) => ({ params: { atelier } }));
+}
+const a = ateliers[Astro.params.atelier as AtelierId];
+---
+<Base title={a.seoTitle} description={a.seoDescription} accent={a.couleur} onAccent={a.surCouleur} image={a.image}>
+  <Nav atelier={a} />
+  <main id="contenu">
+    <Hero atelier={a} />
+    <Prestations atelier={a} />
+    <Methode />
+    <Journee />
+    <Reperes atelier={a} />
+    <Faq />
+    <Close atelier={a} />
+  </main>
+  <Footer />
+  <QuoteModal atelier={a} />
+</Base>

@@ -1,0 +1,23 @@
+---
+import { journee } from '../data/ateliers';
+---
+<section class="section" id="journee">
+  <div class="day">
+    <div class="left">
+      <h2 class="rv">Une journée à l'atelier, heure par heure.</h2>
+      <div class="clock" id="clock" aria-hidden="true">{journee[0].heure}</div>
+      <ol class="idx" id="idx">
+        {journee.map((j, i) => <li class={i === 0 ? 'on' : ''}><span>{j.heure}</span>{j.titre}</li>)}
+      </ol>
+      <p class="note">Exemple de journée type, donné à titre indicatif.</p>
+    </div>
+    <div class="moments">
+      {journee.map((j, i) => (
+        <article class="mo rv" data-i={i} data-h={j.heure}>
+          <img src={j.image} style={`object-position:${j.position}`} alt="" loading="lazy" />
+          <div><h3>{j.titre}</h3><p>{j.texte}</p></div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

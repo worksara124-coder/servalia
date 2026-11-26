@@ -1,0 +1,27 @@
+---
+import Icon from './Icon.astro';
+import { entreprise as e } from '../data/ateliers';
+const etapes = [
+  ['Atelier', 'Mécanique ou métallique, et les prestations'],
+  ['Besoin', 'Panne, maintenance ou projet neuf, avec le délai'],
+  ['Site', 'Sur votre site ou dans notre atelier'],
+  ['Coordonnées', 'Pour vous rappeler avec une estimation'],
+];
+---
+<section class="close" id="contact">
+  <div>
+    <h2>Votre prochaine intervention commence par un message.</h2>
+    <p class="mut">Décrivez votre besoin en quatre étapes, un technicien vous recontacte. Siège : {e.adresse}.</p>
+    <div class="acts">
+      <button class="btn" type="button" data-quote>Démarrer ma demande <Icon name="arrow" /></button>
+      {e.telephone && <a class="link" href={`tel:${e.telephone.replace(/\s/g, '')}`}>{e.telephone}</a>}
+      {e.email && <a class="link" href={`mailto:${e.email}`}>{e.email}</a>}
+      <a class="link" href="/?choix">Changer d'atelier <Icon name="arrow" /></a>
+    </div>
+  </div>
+  <div>
+    <ol class="close-steps">
+      {etapes.map(([t, d], i) => <li><span>0{i + 1}</span><div>{t}<small>{d}</small></div></li>)}
+    </ol>
+  </div>
+</section>

@@ -1,0 +1,26 @@
+---
+import { entreprise as e, secteurs, type Atelier } from '../data/ateliers';
+interface Props { atelier: Atelier }
+const { atelier: a } = Astro.props;
+---
+<section class="section" id="reperes">
+  <div class="head rv"><h2>SERVALIA en quelques repères.</h2></div>
+  <div class="bento rv">
+    <div class="bx photo">
+      <img src={a.image2} alt="" loading="lazy" />
+      <p>Une équipe qui fabrique dans son atelier et intervient directement chez vous.</p>
+    </div>
+    <div class="bx soft">
+      <p>Maintenance industrielle, systèmes automatisés et électromécaniques, installations électriques, usinage de précision et ouvrages métalliques.</p>
+      <div class="sect">{secteurs.map((s) => <span>{s}</span>)}</div>
+    </div>
+    <div class="bx acc">
+      <div class="big">{e.creation}</div>
+      <div><p class="lead">Année de création de SERVALIA, à Casablanca.</p><p class="sm">{e.forme}</p></div>
+    </div>
+    <div class="bx dkb">
+      <div class="big">2 ateliers</div>
+      <div><p class="lead">Mécanique et métallique, sous le même toit.</p><p class="sm">Capital de {e.capital}</p></div>
+    </div>
+  </div>
+</section>

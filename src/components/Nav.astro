@@ -1,0 +1,28 @@
+---
+import { ateliers, type Atelier } from '../data/ateliers';
+interface Props { atelier?: Atelier }
+const { atelier: a } = Astro.props;
+const autre = a ? Object.values(ateliers).find((x) => x.id !== a.id) : undefined;
+const liens = a
+  ? [['Prestations', '#prestations'], ['Méthode', '#methode'], ['Journée type', '#journee'], ['Repères', '#reperes'], ['Questions', '#questions'], ['Contact', '#contact']]
+  : [['Atelier Mécanique', '/mecanique'], ['Atelier Métallique', '/metallique']];
+---
+<header class="nav" id="nav">
+  <div class="nav-in">
+    <a class="brand" href="/?choix" aria-label="SERVALIA — choisir un atelier">
+      <img src="/img/mark.png" alt="" width="34" height="34" />SERVALIA
+    </a>
+    <ul>{liens.map(([t, h]) => <li><a href={h}>{t}</a></li>)}</ul>
+    <div class="sp">
+      {autre && <a class="sw" href={`/${autre.id}`}>Voir l'{autre.nom.replace('Atelier', 'atelier')}</a>}
+      <a class="btn dk" href={a ? '#contact' : '/mecanique#contact'} data-quote>Demander un devis</a>
+      <button class="menu-btn" id="menu-open" type="button" aria-expanded="false" aria-controls="mobile">Menu</button>
+    </div>
+  </div>
+</header>
+<nav class="mobile" id="mobile" aria-label="Menu mobile">
+  <button class="menu-btn close" id="menu-close" type="button">Fermer</button>
+  {liens.map(([t, h]) => <a href={h}>{t}</a>)}
+  {autre && <a href={`/${autre.id}`}>{autre.nom}</a>}
+  <a href="/?choix">Choisir un atelier</a>
+</nav>

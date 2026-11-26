@@ -1,0 +1,45 @@
+---
+import Icon from './Icon.astro';
+import type { Atelier } from '../data/ateliers';
+interface Props { atelier: Atelier }
+const { atelier: a } = Astro.props;
+---
+<section class="hero" aria-labelledby="titre">
+  <div class="stage">
+    <div class="photo"><img src={a.image} alt={`Techniciens SERVALIA — ${a.nom}`} transition:name={`photo-${a.id}`} /></div>
+    <div class="notch">
+      <h1 id="titre">{a.titreLignes.map((l) => <span><i>{l}</i></span>)}</h1>
+    </div>
+    <div class="pitch">
+      <span class="atag">{a.nom} · Casablanca</span>
+      <p>{a.accroche}</p>
+      <a class="link" href="#prestations">Découvrir les prestations <Icon name="arrow" /></a>
+    </div>
+    <form class="quick" id="quick" aria-label="Demande rapide">
+      <label>Prestation
+        <select id="h-presta">{a.prestations.map((p) => <option>{p.titre}</option>)}</select>
+      </label>
+      <label>Ville du site
+        <input id="h-ville" value="Casablanca" autocomplete="address-level2" />
+      </label>
+      <label>Délai
+        <div class="seg" role="group" aria-label="Délai">
+          <button type="button" data-v="Urgent" aria-pressed="false">Urgent</button>
+          <button type="button" data-v="Planifié" aria-pressed="true">Planifié</button>
+        </div>
+      </label>
+      <label>Lieu
+        <div class="seg" role="group" aria-label="Lieu">
+          <button type="button" data-v="Sur site" aria-pressed="true">Sur site</button>
+          <button type="button" data-v="Atelier" aria-pressed="false">Atelier</button>
+        </div>
+      </label>
+      <button class="btn" type="submit">Demander un devis <Icon name="arrow" /></button>
+    </form>
+  </div>
+</section>
+<div class="marks">
+  <span><b>Depuis 2018</b> à Casablanca</span>
+  <span><b>Étude → réalisation</b> un seul interlocuteur</span>
+  <span><b>Atelier & sur site</b> fabrication et intervention</span>
+</div>

@@ -1,0 +1,19 @@
+---
+import { etapes } from '../data/ateliers';
+---
+<section class="section" id="methode">
+  <div class="head rv">
+    <h2>Un appel le matin. Un rapport à la fin.</h2>
+    <p>Chaque intervention suit les mêmes huit étapes, que ce soit une pompe arrêtée ou une passerelle à fabriquer.</p>
+  </div>
+  <div class="steps rv">
+    {etapes.map((s, i) => (
+      <div class={`st${i === 0 || etapes[i - 1].phase !== s.phase ? ' first' : ''}${i === 2 ? ' hl' : ''}`} data-p={s.phase}>
+        <div class="bar"></div>
+        <span class="ph">{s.phase}</span>
+        <b>{s.titre}</b>
+        <p>{s.texte}</p>
+      </div>
+    ))}
+  </div>
+</section>

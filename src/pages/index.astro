@@ -1,0 +1,57 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { ateliers } from '../data/ateliers';
+const list = [ateliers.mecanique, ateliers.metallique];
+---
+<Base
+  title="SERVALIA — Maintenance industrielle et construction métallique à Casablanca"
+  description="SERVALIA, Casablanca : maintenance industrielle, électromécanique, automatismes, usinage de précision et construction métallique. Choisissez votre atelier."
+>
+  <div id="intro" aria-label="Introduction SERVALIA">
+    <div class="ilogo">
+      <img class="mark" src="/img/mark-dark.png" alt="" />
+      <img class="word" src="/img/word.png" alt="SERVALIA" />
+      <div class="bar"><i></i></div>
+      <div class="tag">Maintenance industrielle · Usinage · Construction métallique</div>
+    </div>
+    <button class="skip" id="skip" type="button">Passer l'intro</button>
+  </div>
+
+  <main id="contenu" class="choose">
+    <div class="pick">
+      <img src="/img/mark.png" alt="" width="28" height="28" />
+      <h1>Choisissez votre atelier</h1>
+    </div>
+    {list.map((a, i) => (
+      <a class="door" href={`/${a.id}`} style={`--door:${a.couleur};--door-on:${a.surCouleur}`}>
+        <img src={a.image} alt="" transition:name={`photo-${a.id}`} />
+        <span class="no">{String(i + 1).padStart(2, '0')} · Atelier</span>
+        <div class="in">
+          <div><h2>{a.court}</h2><p>{a.choixTexte}</p></div>
+          <span class="btn">Entrer <Icon name="arrow" /></span>
+        </div>
+      </a>
+    ))}
+  </main>
+</Base>
+
+<script>
+  function initIntro() {
+    const intro = document.getElementById('intro');
+    if (!intro) return;
+    let seen = false;
+    try { seen = sessionStorage.getItem('servalia-intro') === '1'; } catch {}
+    const skipNow = seen || new URLSearchParams(location.search).has('choix');
+    const end = () => {
+      intro.classList.add('out');
+      document.body.classList.remove('lock');
+      try { sessionStorage.setItem('servalia-intro', '1'); } catch {}
+    };
+    if (skipNow) { intro.classList.add('out'); return; }
+    document.body.classList.add('lock');
+    document.getElementById('skip')?.addEventListener('click', end);
+    setTimeout(end, matchMedia('(prefers-reduced-motion: reduce)').matches ? 600 : 3500);
+  }
+  document.addEventListener('astro:page-load', initIntro);
+</script>
